@@ -32,7 +32,7 @@ export function Header({ variant, onBack, onSearch, initialQuery }: HeaderProps)
 
           {/* Hero section */}
           <div className="py-14 pb-20 flex flex-col items-center text-center">
-            <h2 className="text-3xl font-normal mb-10 tracking-wide">
+            <h2 className="text-3xl font-black mb-10 tracking-wide">
               どんなことでお困りですか？
             </h2>
             <SearchBox
