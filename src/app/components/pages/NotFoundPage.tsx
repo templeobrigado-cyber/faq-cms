@@ -80,7 +80,7 @@ export function NotFoundPage({ type = '404', errorMessage }: NotFoundPageProps) 
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
             <a
               href="/"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-amber-500 to-amber-600 text-white rounded-lg hover:from-amber-600 hover:to-amber-700 transition-all font-medium shadow-md hover:shadow-lg"
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-amber-500 to-amber-600 text-gray-900 rounded-lg hover:from-amber-600 hover:to-amber-700 transition-all font-medium shadow-md hover:shadow-lg"
             >
               <Home className="w-5 h-5" />
               トップページへ戻る

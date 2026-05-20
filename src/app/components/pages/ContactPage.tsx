@@ -56,7 +56,7 @@ export function ContactPage() {
               </div>
               <a
                 href="/"
-                className="inline-block px-8 py-3 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition-colors font-medium shadow-md hover:shadow-lg"
+                className="inline-block px-8 py-3 bg-amber-600 text-gray-900 rounded-lg hover:bg-amber-700 transition-colors font-medium shadow-md hover:shadow-lg"
               >
                 トップページへ戻る
               </a>
@@ -218,7 +218,7 @@ export function ContactPage() {
             {/* 送信ボタン */}
             <button
               type="submit"
-              className="w-full px-6 py-4 bg-gradient-to-r from-amber-500 to-amber-600 text-white rounded-lg hover:from-amber-600 hover:to-amber-700 transition-all font-medium shadow-md hover:shadow-lg flex items-center justify-center gap-2 text-lg"
+              className="w-full px-6 py-4 bg-gradient-to-r from-amber-500 to-amber-600 text-gray-900 rounded-lg hover:from-amber-600 hover:to-amber-700 transition-all font-medium shadow-md hover:shadow-lg flex items-center justify-center gap-2 text-lg"
             >
               <Send className="w-5 h-5" />
               送信する

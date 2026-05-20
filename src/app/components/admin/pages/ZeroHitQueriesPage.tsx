@@ -182,7 +182,7 @@ export function ZeroHitQueriesPage() {
                         <>
                           <button
                             onClick={() => navigate(`/admin/articles/new?title=${encodeURIComponent(row.query)}`)}
-                            className="flex items-center gap-1 px-3 py-1.5 bg-amber-600 text-white rounded text-xs hover:bg-amber-700 transition-colors"
+                            className="flex items-center gap-1 px-3 py-1.5 bg-amber-600 text-gray-900 rounded text-xs hover:bg-amber-700 transition-colors"
                           >
                             <FileText className="w-3.5 h-3.5" />
                             記事化

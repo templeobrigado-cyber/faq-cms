@@ -14,7 +14,7 @@ export function AdminTopbar() {
   }
 
   return (
-    <header className="h-14 bg-gradient-to-r from-amber-500 to-amber-600 text-white flex items-center justify-between px-6 shadow-md sticky top-0 z-40">
+    <header className="h-14 bg-gradient-to-r from-amber-500 to-amber-600 text-gray-900 flex items-center justify-between px-6 shadow-md sticky top-0 z-40">
       <div className="flex items-center gap-4">
         <h2 className="text-lg font-medium">管理画面</h2>
       </div>

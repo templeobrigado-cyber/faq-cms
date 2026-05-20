@@ -113,7 +113,7 @@ export function SettingsPage() {
         <button
           onClick={handleSave}
           disabled={saveState === 'saving'}
-          className="flex items-center gap-2 px-4 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition-colors text-sm disabled:opacity-50"
+          className="flex items-center gap-2 px-4 py-2 bg-amber-600 text-gray-900 rounded-lg hover:bg-amber-700 transition-colors text-sm disabled:opacity-50"
         >
           {saveState === 'saving' && <Loader2 className="w-4 h-4 animate-spin" />}
           {saveState === 'saved' && <CheckCircle className="w-4 h-4" />}

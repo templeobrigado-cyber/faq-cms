@@ -55,7 +55,7 @@ export function ArticleListPage() {
         <h1 className="text-2xl font-medium text-gray-900">記事一覧</h1>
         <button
           onClick={() => navigate('/admin/articles/new')}
-          className="flex items-center gap-2 px-4 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition-colors"
+          className="flex items-center gap-2 px-4 py-2 bg-amber-600 text-gray-900 rounded-lg hover:bg-amber-700 transition-colors"
         >
           <Plus className="w-4 h-4" />
           新規作成

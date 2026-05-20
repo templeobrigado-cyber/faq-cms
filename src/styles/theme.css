@@ -3,14 +3,14 @@
 :root {
   --font-size: 16px;
 
-  /* Amber palette (primary brand) - Brighter version */
-  --amber-50: #FFF8E7;
-  --amber-100: #FFE8B3;
-  --amber-200: #FFD480;
-  --amber-400: #FFB84D;
-  --amber-600: #FF9D1A;
-  --amber-800: #E68A00;
-  --amber-900: #B36B00;
+  /* Amber palette (primary brand) */
+  --amber-50: #FFFDF0;
+  --amber-100: #FFF8D0;
+  --amber-200: #FFF09A;
+  --amber-400: #FFE24D;
+  --amber-600: #FFD008;
+  --amber-800: #C9A400;
+  --amber-900: #9E8200;
 
   /* Coral palette (accent) */
   --coral-400: #D85A30;
@@ -23,7 +23,7 @@
   --gray-900: #2C2C2A;
 
   /* Base colors */
-  --background: #FBF9F4;
+  --background: #FFF7EA;
   --foreground: var(--gray-900);
   --card: #ffffff;
   --card-foreground: var(--gray-900);
@@ -32,7 +32,7 @@
 
   /* Brand colors */
   --primary: var(--amber-800);
-  --primary-foreground: #ffffff;
+  --primary-foreground: #1A1A1A;
   --secondary: #ffffff;
   --secondary-foreground: var(--gray-900);
 

@@ -11,7 +11,7 @@ interface HeaderProps {
 export function Header({ variant, onBack, onSearch, initialQuery }: HeaderProps) {
   if (variant === 'hero') {
     return (
-      <header className="bg-gradient-to-br from-amber-400 via-amber-500 to-amber-600 text-white shadow-md">
+      <header className="bg-gradient-to-br from-amber-400 via-amber-500 to-amber-600 text-gray-900 shadow-md">
         <div className="max-w-[1200px] mx-auto px-6 md:px-8 lg:px-12">
           {/* Top bar */}
           <div className="h-16 flex items-center justify-between">
@@ -48,7 +48,7 @@ export function Header({ variant, onBack, onSearch, initialQuery }: HeaderProps)
   }
 
   return (
-    <header className="bg-gradient-to-br from-amber-400 via-amber-500 to-amber-600 text-white shadow-md">
+    <header className="bg-gradient-to-br from-amber-400 via-amber-500 to-amber-600 text-gray-900 shadow-md">
       <div className="max-w-[1200px] mx-auto px-6 md:px-8 lg:px-12 h-16 flex items-center justify-between gap-4">
         <div className="flex items-center gap-4 shrink-0">
           <h1 className="text-xl font-medium">FAQ-CMS</h1>

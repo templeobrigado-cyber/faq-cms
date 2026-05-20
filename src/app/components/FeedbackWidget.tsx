@@ -26,7 +26,7 @@ export function FeedbackWidget({ onSubmit }: FeedbackWidgetProps) {
   if (submitted) {
     return (
       <div className="bg-gradient-to-br from-amber-50 to-amber-100/40 border-2 border-amber-200 rounded-lg p-8 text-center shadow-sm">
-        <div className="inline-flex items-center justify-center w-16 h-16 bg-amber-600 text-white rounded-full mb-4">
+        <div className="inline-flex items-center justify-center w-16 h-16 bg-amber-600 text-gray-900 rounded-full mb-4">
           <ThumbsUp className="w-8 h-8" />
         </div>
         <p className="text-amber-700 font-medium text-lg">フィードバックありがとうございます</p>
@@ -42,7 +42,7 @@ export function FeedbackWidget({ onSubmit }: FeedbackWidgetProps) {
         <button
           onClick={() => handleFeedback('helpful')}
           disabled={feedback !== null}
-          className="flex items-center gap-2 px-6 py-3 bg-amber-600 text-white border-2 border-amber-600 rounded-lg hover:bg-amber-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+          className="flex items-center gap-2 px-6 py-3 bg-amber-600 text-gray-900 border-2 border-amber-600 rounded-lg hover:bg-amber-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
         >
           <ThumbsUp className="w-5 h-5" />
           <span className="font-medium">はい</span>
@@ -68,7 +68,7 @@ export function FeedbackWidget({ onSubmit }: FeedbackWidgetProps) {
           />
           <button
             onClick={handleSubmit}
-            className="w-full px-6 py-3 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition-colors font-medium"
+            className="w-full px-6 py-3 bg-amber-600 text-gray-900 rounded-lg hover:bg-amber-700 transition-colors font-medium"
           >
             送信
           </button>

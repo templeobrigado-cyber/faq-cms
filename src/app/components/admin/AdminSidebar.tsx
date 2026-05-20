@@ -60,7 +60,7 @@ export function AdminSidebar() {
       <div className="px-4 py-4">
         <button
           onClick={() => navigate('/')}
-          className="w-full px-4 py-3 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition-colors font-medium flex items-center justify-center gap-2"
+          className="w-full px-4 py-3 bg-amber-600 text-gray-900 rounded-lg hover:bg-amber-700 transition-colors font-medium flex items-center justify-center gap-2"
         >
           <ArrowLeft className="w-4 h-4" />
           公開サイトへ戻る

@@ -22,7 +22,7 @@ const TYPE_LABELS: Record<ArticleSection['type'], string> = {
 }
 
 const TYPE_BADGE: Record<ArticleSection['type'], string> = {
-  overview:    'bg-amber-600 text-white',
+  overview:    'bg-amber-600 text-gray-900',
   analysis:    'bg-blue-600 text-white',
   procedure:   'bg-green-600 text-white',
   troubleshoot:'bg-red-600 text-white',

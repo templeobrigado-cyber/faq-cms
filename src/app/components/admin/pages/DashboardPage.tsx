@@ -167,7 +167,7 @@ export function DashboardPage() {
                         <span className="text-sm text-gray-500">{item.count}回</span>
                         <button
                           onClick={() => navigate(`/admin/articles/new?q=${encodeURIComponent(item.query)}`)}
-                          className="px-3 py-1 bg-amber-600 text-white text-xs rounded hover:bg-amber-700 transition-colors"
+                          className="px-3 py-1 bg-amber-600 text-gray-900 text-xs rounded hover:bg-amber-700 transition-colors"
                         >
                           記事化
                         </button>

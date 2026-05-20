@@ -118,7 +118,7 @@ export function TagManagementPage() {
         <h1 className="text-2xl font-medium text-gray-900">タグ管理</h1>
         <button
           onClick={openAdd}
-          className="flex items-center gap-2 px-4 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition-colors"
+          className="flex items-center gap-2 px-4 py-2 bg-amber-600 text-gray-900 rounded-lg hover:bg-amber-700 transition-colors"
         >
           <Plus className="w-4 h-4" />
           タグを追加
@@ -333,7 +333,7 @@ export function TagManagementPage() {
               <button
                 onClick={handleSave}
                 disabled={saving || !formName.trim()}
-                className="px-4 py-2 bg-amber-600 text-white rounded-lg text-sm hover:bg-amber-700 disabled:opacity-50 flex items-center gap-2"
+                className="px-4 py-2 bg-amber-600 text-gray-900 rounded-lg text-sm hover:bg-amber-700 disabled:opacity-50 flex items-center gap-2"
               >
                 {saving && <Loader2 className="w-3.5 h-3.5 animate-spin" />}
                 {editingId ? '更新' : '追加'}
