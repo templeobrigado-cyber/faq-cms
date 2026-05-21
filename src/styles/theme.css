@@ -2,6 +2,7 @@
 
 :root {
   --font-size: 16px;
+  --font-family-base: 'Noto Sans JP', sans-serif;
 
   /* Amber palette (primary brand) */
   --amber-50: #FFFDF0;
@@ -213,7 +214,7 @@
 
   body {
     @apply bg-background text-foreground;
-    font-family: 'Noto Sans JP', sans-serif;
+    font-family: var(--font-family-base);
   }
 
   /**

@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { Routes, Route, Navigate } from 'react-router'
 import { AuthProvider } from '../lib/auth'
 import { initTheme } from '../lib/theme'
+import { initFont } from '../lib/font'
 import { TopPage } from './components/pages/TopPage'
 import { CategoryDetailPage } from './components/pages/CategoryDetailPage'
 import { ArticleDetailPage } from './components/pages/ArticleDetailPage'
@@ -12,7 +13,7 @@ import { AdminLayout } from './components/admin/AdminLayout'
 import { LoginPage } from './components/admin/pages/LoginPage'
 
 export default function App() {
-  useEffect(() => { initTheme() }, [])
+  useEffect(() => { initTheme(); initFont() }, [])
 
   return (
     <AuthProvider>

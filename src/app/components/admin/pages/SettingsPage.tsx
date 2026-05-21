@@ -3,6 +3,7 @@ import { useAuth } from '../../../../lib/auth';
 import { AccessDenied } from '../AccessDenied';
 import { getSettings, saveSettings } from '../../../../lib/services/settings';
 import { applyTheme, type ThemeColor } from '../../../../lib/theme';
+import { applyFont, FONT_OPTIONS, type FontKey } from '../../../../lib/font';
 import {
   Globe, Layout, Search, Mail, BarChart, Palette, Shield, Bell, Save, Loader2, CheckCircle
 } from 'lucide-react';
@@ -69,6 +70,22 @@ export function SettingsPage() {
       setLoading(false)
     })
   }, [])
+
+  // テーマタブを開いたらプレビュー用に全フォントをプリロード
+  useEffect(() => {
+    if (activeTab === 'theme') {
+      FONT_OPTIONS.forEach(f => {
+        if (!f.googleQuery) return
+        const linkId = `gfont-preview-${f.key}`
+        if (document.getElementById(linkId)) return
+        const link = document.createElement('link')
+        link.id = linkId
+        link.rel = 'stylesheet'
+        link.href = `https://fonts.googleapis.com/css2?family=${f.googleQuery}&display=swap`
+        document.head.appendChild(link)
+      })
+    }
+  }, [activeTab])
 
   const set = (key: string, value: string) =>
     setSettings(prev => ({ ...prev, [key]: value }))
@@ -397,12 +414,20 @@ export function SettingsPage() {
               </div>
               <div>
                 <label className={labelClass}>フォント</label>
-                <select className={inputClass} value={settings.theme_font}
-                  onChange={e => set('theme_font', e.target.value)}>
-                  <option value="noto-sans-jp">Noto Sans JP</option>
-                  <option value="inter">Inter</option>
-                  <option value="system">システムフォント</option>
-                </select>
+                <div className="grid grid-cols-2 gap-3">
+                  {FONT_OPTIONS.map(f => (
+                    <button key={f.key} onClick={() => {
+                      set('theme_font', f.key)
+                      applyFont(f.key as FontKey)
+                    }}
+                      className={`p-4 border-2 rounded-lg text-left transition-all ${settings.theme_font === f.key ? 'border-amber-600 ring-2 ring-amber-300/40' : 'border-gray-200 hover:border-gray-300'}`}>
+                      <p className="text-base font-medium text-gray-900 mb-1" style={{ fontFamily: f.family }}>
+                        あのイーハトーヴォ
+                      </p>
+                      <p className="text-xs text-gray-500">{f.label}</p>
+                    </button>
+                  ))}
+                </div>
               </div>
               <div>
                 <label className={labelClass}>角丸の大きさ</label>
