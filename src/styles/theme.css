@@ -76,6 +76,30 @@
   --sidebar-ring: var(--amber-400);
 }
 
+/* Blue theme (Sea Blue Mist) */
+.theme-blue {
+  --amber-50: #EDF5F9;
+  --amber-100: #D5E8F0;
+  --amber-200: #BBDAEB;
+  --amber-400: #C5DDE8;
+  --amber-600: #9FC7D8;
+  --amber-800: #6FA8C0;
+  --amber-900: #4A8FAD;
+  --background: #F0F6FA;
+}
+
+/* Green theme */
+.theme-green {
+  --amber-50: #EDF8F4;
+  --amber-100: #D4F0E7;
+  --amber-200: #B8E8D8;
+  --amber-400: #C8EEE3;
+  --amber-600: #A6E1CA;
+  --amber-800: #6DC4A8;
+  --amber-900: #4AAD8A;
+  --background: #F0FAF5;
+}
+
 .dark {
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);

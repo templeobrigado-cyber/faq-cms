@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '../../../../lib/auth';
 import { AccessDenied } from '../AccessDenied';
 import { getSettings, saveSettings } from '../../../../lib/services/settings';
+import { applyTheme, type ThemeColor } from '../../../../lib/theme';
 import {
   Globe, Layout, Search, Mail, BarChart, Palette, Shield, Bell, Save, Loader2, CheckCircle
 } from 'lucide-react';
@@ -377,17 +378,19 @@ export function SettingsPage() {
                 <label className={labelClass}>カラースキーム</label>
                 <div className="grid grid-cols-3 gap-3">
                   {[
-                    { value: 'amber', label: 'Amber', color: 'bg-amber-500', desc: '温かみのあるオレンジ' },
-                    { value: 'blue',  label: 'Blue',  color: 'bg-blue-500',  desc: '信頼感のある青' },
-                    { value: 'green', label: 'Green', color: 'bg-green-500', desc: '安心感のある緑' },
+                    { value: 'amber', label: 'Yellow', hex: '#FFD008', desc: 'ブランドイエロー' },
+                    { value: 'blue',  label: 'Sea Blue Mist', hex: '#9FC7D8', desc: '落ち着いたブルー' },
+                    { value: 'green', label: 'Green', hex: '#A6E1CA', desc: '清潔感のあるグリーン' },
                   ].map(c => (
-                    <button key={c.value} onClick={() => set('theme_color', c.value)}
-                      className={`p-4 border-2 rounded-lg text-left transition-all ${settings.theme_color === c.value ? 'border-amber-400 bg-amber-50' : 'border-gray-200 hover:border-gray-300'}`}>
-                      <div className="flex items-center gap-2 mb-1">
-                        <div className={`w-5 h-5 rounded ${c.color}`} />
-                        <span className="text-sm font-medium">{c.label}</span>
-                      </div>
-                      <p className="text-xs text-gray-500">{c.desc}</p>
+                    <button key={c.value} onClick={() => {
+                      set('theme_color', c.value)
+                      applyTheme(c.value as ThemeColor)
+                    }}
+                      className={`p-4 border-2 rounded-lg text-left transition-all ${settings.theme_color === c.value ? 'border-amber-600 ring-2 ring-amber-300/40' : 'border-gray-200 hover:border-gray-300'}`}>
+                      {/* カラープレビュー */}
+                      <div className="w-full h-12 rounded-md mb-3 shadow-sm" style={{ backgroundColor: c.hex }} />
+                      <span className="text-sm font-medium text-gray-900 block">{c.label}</span>
+                      <p className="text-xs text-gray-500 mt-0.5">{c.desc}</p>
                     </button>
                   ))}
                 </div>
