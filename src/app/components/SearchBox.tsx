@@ -47,12 +47,10 @@ export function SearchBox({
   return (
     <div className={`${maxWidth} flex items-center gap-2`}>
       <div className="relative flex-1">
-        {/* Search icon - only show for hero variant */}
-        {variant === 'hero' && (
-          <div className="absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none z-10">
-            <Search className={`w-5 h-5 transition-colors ${isActive ? 'text-amber-600' : 'text-gray-500'}`} />
-          </div>
-        )}
+        {/* Search icon - show for both variants */}
+        <div className="absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none z-10">
+          <Search className={`w-5 h-5 transition-colors ${isActive ? 'text-amber-600' : 'text-gray-500'}`} />
+        </div>
         <input
           type="search"
           placeholder={placeholder}
@@ -60,7 +58,7 @@ export function SearchBox({
           onChange={(e) => setQuery(e.target.value)}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setTimeout(() => setIsFocused(false), 200)}
-          className={`${height} ${rounded} w-full ${variant === 'hero' ? 'pl-12' : 'pl-4'} ${query ? 'pr-12' : 'pr-4'} transition-all ${
+          className={`${height} ${rounded} w-full pl-12 ${query ? 'pr-12' : 'pr-4'} transition-all ${
             isActive
               ? 'bg-white border-2 border-amber-400 shadow-md'
               : 'bg-white/95 backdrop-blur-sm border-2 border-white/50 shadow-sm'
