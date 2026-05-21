@@ -4,7 +4,8 @@
       "Bash(npm run *)",
       "Bash(git add *)",
       "Bash(git commit -m 'fix: add SPA rewrite rule for client-side routing *)",
-      "Bash(git push *)"
+      "Bash(git push *)",
+      "Bash(git commit -m 'feat: add logo, favicon, header text settings *)"
     ]
   }
 }

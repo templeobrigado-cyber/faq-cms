@@ -1,9 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useAuth } from '../../../../lib/auth';
 import { AccessDenied } from '../AccessDenied';
 import { getSettings, saveSettings } from '../../../../lib/services/settings';
 import { applyTheme, type ThemeColor } from '../../../../lib/theme';
 import { applyFont, FONT_OPTIONS, type FontKey } from '../../../../lib/font';
+import { uploadSiteAsset } from '../../../../lib/services/storage';
+import { Upload, X as XIcon } from 'lucide-react';
 import { applyRadius, RADIUS_OPTIONS, type RadiusKey } from '../../../../lib/radius';
 import {
   Globe, Layout, Search, Mail, BarChart, Palette, Shield, Bell, Save, Loader2, CheckCircle
@@ -15,6 +17,10 @@ const DEFAULTS: Record<string, string> = {
   site_name: 'FAQ-CMS ヘルプセンター',
   site_description: 'よくあるご質問とその回答を掲載しています。',
   site_url: '',
+  site_logo_url: '',
+  site_favicon_url: '',
+  header_title: 'FAQ-CMS',
+  header_subtitle: 'FAQ よくあるご質問',
   language: 'ja',
   layout: 'grid',
   category_count: '6',
@@ -65,6 +71,30 @@ export function SettingsPage() {
   const [settings, setSettings] = useState<Record<string, string>>(DEFAULTS);
   const [loading, setLoading] = useState(true);
   const [saveState, setSaveState] = useState<SaveState>('idle');
+  const [uploadingLogo, setUploadingLogo] = useState(false);
+  const [uploadingFavicon, setUploadingFavicon] = useState(false);
+  const logoInputRef = useRef<HTMLInputElement>(null);
+  const faviconInputRef = useRef<HTMLInputElement>(null);
+
+  const handleLogoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploadingLogo(true);
+    const url = await uploadSiteAsset(file);
+    if (url) set('site_logo_url', url);
+    setUploadingLogo(false);
+    e.target.value = '';
+  };
+
+  const handleFaviconUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploadingFavicon(true);
+    const url = await uploadSiteAsset(file);
+    if (url) set('site_favicon_url', url);
+    setUploadingFavicon(false);
+    e.target.value = '';
+  };
 
   useEffect(() => {
     getSettings().then(data => {
@@ -170,6 +200,78 @@ export function SettingsPage() {
           {activeTab === 'general' && (
             <div className="space-y-5">
               <h2 className="font-medium text-gray-900 mb-4">サイト基本設定</h2>
+
+              {/* サイトロゴ */}
+              <div>
+                <label className={labelClass}>サイトロゴ</label>
+                <div className="flex items-start gap-4">
+                  <div className="w-32 h-16 rounded-lg border-2 border-dashed border-gray-200 flex items-center justify-center bg-gray-50 overflow-hidden shrink-0">
+                    {settings.site_logo_url
+                      ? <img src={settings.site_logo_url} alt="logo" className="max-w-full max-h-full object-contain p-1" />
+                      : <span className="text-xs text-gray-400">未設定</span>
+                    }
+                  </div>
+                  <div className="flex flex-col gap-2">
+                    <input ref={logoInputRef} type="file" accept="image/*" className="hidden" onChange={handleLogoUpload} />
+                    <button onClick={() => logoInputRef.current?.click()} disabled={uploadingLogo}
+                      className="flex items-center gap-2 px-3 py-2 border border-gray-200 rounded-lg text-sm hover:bg-gray-50 disabled:opacity-50">
+                      <Upload className="w-4 h-4" />
+                      {uploadingLogo ? 'アップロード中…' : '画像を選択'}
+                    </button>
+                    {settings.site_logo_url && (
+                      <button onClick={() => set('site_logo_url', '')}
+                        className="flex items-center gap-1 text-xs text-red-500 hover:text-red-600">
+                        <XIcon className="w-3 h-3" /> 削除
+                      </button>
+                    )}
+                    <p className="text-xs text-gray-400">PNG / SVG 推奨。ヘッダーのテキストと差し替わります。</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* ファビコン */}
+              <div>
+                <label className={labelClass}>ファビコン</label>
+                <div className="flex items-start gap-4">
+                  <div className="w-16 h-16 rounded-lg border-2 border-dashed border-gray-200 flex items-center justify-center bg-gray-50 overflow-hidden shrink-0">
+                    {settings.site_favicon_url
+                      ? <img src={settings.site_favicon_url} alt="favicon" className="w-10 h-10 object-contain" />
+                      : <span className="text-xs text-gray-400">未設定</span>
+                    }
+                  </div>
+                  <div className="flex flex-col gap-2">
+                    <input ref={faviconInputRef} type="file" accept="image/png,image/x-icon,image/svg+xml" className="hidden" onChange={handleFaviconUpload} />
+                    <button onClick={() => faviconInputRef.current?.click()} disabled={uploadingFavicon}
+                      className="flex items-center gap-2 px-3 py-2 border border-gray-200 rounded-lg text-sm hover:bg-gray-50 disabled:opacity-50">
+                      <Upload className="w-4 h-4" />
+                      {uploadingFavicon ? 'アップロード中…' : '画像を選択'}
+                    </button>
+                    {settings.site_favicon_url && (
+                      <button onClick={() => set('site_favicon_url', '')}
+                        className="flex items-center gap-1 text-xs text-red-500 hover:text-red-600">
+                        <XIcon className="w-3 h-3" /> 削除
+                      </button>
+                    )}
+                    <p className="text-xs text-gray-400">PNG / ICO / SVG。32×32px 推奨。</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* ヘッダーテキスト */}
+              <div>
+                <label className={labelClass}>ヘッダータイトル</label>
+                <input type="text" className={inputClass} value={settings.header_title}
+                  onChange={e => set('header_title', e.target.value)}
+                  placeholder="FAQ-CMS" />
+                <p className={hintClass}>ロゴ未設定時にヘッダー左に表示されます</p>
+              </div>
+              <div>
+                <label className={labelClass}>ヘッダーサブタイトル</label>
+                <input type="text" className={inputClass} value={settings.header_subtitle}
+                  onChange={e => set('header_subtitle', e.target.value)}
+                  placeholder="FAQ よくあるご質問" />
+              </div>
+
               <div>
                 <label className={labelClass}>サイト名 <span className="text-red-500">*</span></label>
                 <input type="text" className={inputClass} value={settings.site_name}

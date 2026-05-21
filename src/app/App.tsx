@@ -4,6 +4,7 @@ import { AuthProvider } from '../lib/auth'
 import { initTheme } from '../lib/theme'
 import { initFont } from '../lib/font'
 import { initRadius } from '../lib/radius'
+import { getSettings } from '../lib/services/settings'
 import { TopPage } from './components/pages/TopPage'
 import { CategoryDetailPage } from './components/pages/CategoryDetailPage'
 import { ArticleDetailPage } from './components/pages/ArticleDetailPage'
@@ -14,7 +15,19 @@ import { AdminLayout } from './components/admin/AdminLayout'
 import { LoginPage } from './components/admin/pages/LoginPage'
 
 export default function App() {
-  useEffect(() => { initTheme(); initFont(); initRadius() }, [])
+  useEffect(() => {
+    initTheme(); initFont(); initRadius()
+    // ファビコンを動的に適用
+    getSettings().then(s => {
+      if (s.site_favicon_url) {
+        const link = document.querySelector<HTMLLinkElement>("link[rel~='icon']") ?? document.createElement('link')
+        link.type = 'image/x-icon'
+        link.rel = 'icon'
+        link.href = s.site_favicon_url
+        document.head.appendChild(link)
+      }
+    })
+  }, [])
 
   return (
     <AuthProvider>
