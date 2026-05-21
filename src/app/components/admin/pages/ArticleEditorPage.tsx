@@ -146,12 +146,13 @@ export function ArticleEditorPage() {
 
   const handleDragStart = (e: React.DragEvent, index: number, id: string) => {
     dragIndex.current = index;
-    setDraggingId(id);
     e.dataTransfer.effectAllowed = 'move';
-    // ゴースト画像のちらつきを防ぐため少し遅らせてopacity変更
-    setTimeout(() => {
-      (e.target as HTMLElement).style.opacity = '0.4';
-    }, 0);
+    e.dataTransfer.setData('text/plain', String(index)); // Firefox対応
+    // ドラッグ画像をカード全体（グリップの親の親）に設定
+    const card = (e.currentTarget as HTMLElement).closest('.border-2') as HTMLElement;
+    if (card) e.dataTransfer.setDragImage(card, 20, 20);
+    // state更新はdataTransfer設定の後（再レンダリングを遅らせる）
+    setTimeout(() => setDraggingId(id), 0);
   };
 
   const handleDragOver = (e: React.DragEvent, index: number) => {
@@ -193,8 +194,7 @@ export function ArticleEditorPage() {
     scheduleAutoSave();
   };
 
-  const handleDragEnd = (e: React.DragEvent) => {
-    (e.target as HTMLElement).style.opacity = '';
+  const handleDragEnd = () => {
     if (dragOverEl.current) {
       dragOverEl.current.classList.remove('ring-2', 'ring-amber-400', '-translate-y-0.5');
       dragOverEl.current = null;
@@ -646,21 +646,26 @@ export function ArticleEditorPage() {
                 const typeInfo = getSectionTypeInfo(section.type);
                 const isDragging = draggingId === section.id;
                 return (
+                  // カード全体はドロップターゲット（draggable不要）
                   <div
                     key={section.id}
-                    draggable
-                    onDragStart={(e) => handleDragStart(e, index, section.id)}
                     onDragOver={(e) => handleDragOver(e, index)}
                     onDragLeave={handleDragLeave}
                     onDrop={handleDrop}
-                    onDragEnd={handleDragEnd}
-                    className={`bg-white rounded-lg border-2 p-6 transition-all select-none ${
-                      isDragging ? 'border-amber-300' : 'border-gray-200'
+                    className={`bg-white rounded-lg border-2 p-6 transition-all ${
+                      isDragging ? 'opacity-50 border-amber-300' : 'border-gray-200'
                     }`}
                   >
                     <div className="flex items-start gap-4">
-                      <div className="mt-2 cursor-grab active:cursor-grabbing touch-none">
-                        <GripVertical className="w-5 h-5 text-gray-400 hover:text-gray-600 transition-colors" />
+                      {/* グリップのみdraggable — ここだけがドラッグ起点 */}
+                      <div
+                        draggable
+                        onDragStart={(e) => handleDragStart(e, index, section.id)}
+                        onDragEnd={handleDragEnd}
+                        className="mt-2 cursor-grab active:cursor-grabbing select-none shrink-0"
+                        title="ドラッグして並び替え"
+                      >
+                        <GripVertical className="w-5 h-5 text-gray-300 hover:text-gray-500 transition-colors" />
                       </div>
                       <div className="flex-1">
                         <div className="flex items-center gap-3 mb-3">
@@ -674,7 +679,6 @@ export function ArticleEditorPage() {
                           type="text"
                           value={section.title}
                           onChange={(e) => handleSectionChange(section.id, 'title', e.target.value)}
-                          onDragStart={(e) => e.stopPropagation()}
                           placeholder="セクションタイトル"
                           className="w-full px-4 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-amber-400 focus:ring-4 focus:ring-amber-300/30 font-medium mb-3"
                         />
@@ -683,7 +687,6 @@ export function ArticleEditorPage() {
                           type="text"
                           value={section.subtitle ?? ''}
                           onChange={(e) => handleSectionChange(section.id, 'subtitle', e.target.value)}
-                          onDragStart={(e) => e.stopPropagation()}
                           placeholder="サブタイトル（任意）"
                           className="w-full px-4 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-amber-400 focus:ring-4 focus:ring-amber-300/30 text-sm mb-3"
                         />
@@ -691,7 +694,6 @@ export function ArticleEditorPage() {
                         <textarea
                           value={section.body_md}
                           onChange={(e) => handleSectionChange(section.id, 'body_md', e.target.value)}
-                          onDragStart={(e) => e.stopPropagation()}
                           placeholder="本文をMarkdown形式で入力..."
                           rows={8}
                           className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-amber-400 focus:ring-4 focus:ring-amber-300/30 font-mono text-sm"
