@@ -1,5 +1,9 @@
+import { useEffect, useState } from 'react';
 import { ArrowLeft } from 'lucide-react';
 import { SearchBox } from './SearchBox';
+import { getSettings } from '../../lib/services/settings';
+
+const DEFAULT_PLACEHOLDER = '検索（例：サイトレポートとは？）';
 
 interface HeaderProps {
   variant: 'hero' | 'compact';
@@ -9,6 +13,14 @@ interface HeaderProps {
 }
 
 export function Header({ variant, onBack, onSearch, initialQuery }: HeaderProps) {
+  const [placeholder, setPlaceholder] = useState(DEFAULT_PLACEHOLDER);
+
+  useEffect(() => {
+    getSettings().then(s => {
+      if (s.search_placeholder) setPlaceholder(s.search_placeholder);
+    });
+  }, []);
+
   if (variant === 'hero') {
     return (
       <header className="bg-amber-600 text-gray-900 shadow-md">
@@ -37,7 +49,7 @@ export function Header({ variant, onBack, onSearch, initialQuery }: HeaderProps)
             </h2>
             <SearchBox
               variant="hero"
-              placeholder="検索（例：サイトレポートとは？）"
+              placeholder={placeholder}
               onSearch={onSearch}
               showSuggest={true}
             />
@@ -54,7 +66,7 @@ export function Header({ variant, onBack, onSearch, initialQuery }: HeaderProps)
           <h1 className="text-xl font-medium">FAQ-CMS</h1>
           <span className="text-sm opacity-95">FAQ よくあるご質問</span>
         </div>
-        <SearchBox variant="header" onSearch={onSearch} showSuggest={true} initialValue={initialQuery} />
+        <SearchBox variant="header" placeholder={placeholder} onSearch={onSearch} showSuggest={true} initialValue={initialQuery} />
         {onBack && (
           <button
             onClick={onBack}

@@ -19,6 +19,7 @@ const DEFAULTS: Record<string, string> = {
   layout: 'grid',
   category_count: '6',
   article_order: 'updated',
+  search_placeholder: '検索（例：サイトレポートとは？）',
   show_views: 'true',
   show_date: 'true',
   show_breadcrumb: 'true',
@@ -201,6 +202,17 @@ export function SettingsPage() {
           {activeTab === 'display' && (
             <div className="space-y-5">
               <h2 className="font-medium text-gray-900 mb-4">表示設定</h2>
+              <div>
+                <label className={labelClass}>検索窓のプレースホルダーテキスト</label>
+                <input
+                  type="text"
+                  className={inputClass}
+                  value={settings.search_placeholder}
+                  onChange={e => set('search_placeholder', e.target.value)}
+                  placeholder="例：何かお困りですか？"
+                />
+                <p className="text-xs text-gray-400 mt-1">トップページと各ページのヘッダー検索窓に表示されます</p>
+              </div>
               <div>
                 <label className={labelClass}>トップページのレイアウト</label>
                 <select className={inputClass} value={settings.layout}
