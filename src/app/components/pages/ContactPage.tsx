@@ -17,13 +17,6 @@ export function ContactPage() {
     { label: 'お問い合わせ' }
   ];
 
-  const footerCategories = [
-    { name: '機能説明', href: '/category/features' },
-    { name: '契約・支払方法', href: '/category/billing' },
-    { name: 'アカウント', href: '/category/account' },
-    { name: 'トラブルシューティング', href: '/category/troubleshooting' }
-  ];
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     sendNotification('new_contact', { name, email, subject, message });
@@ -70,11 +63,7 @@ export function ContactPage() {
           </div>
         </main>
 
-        <Footer
-          variant="regular"
-          categories={footerCategories}
-          backToSite={{ name: 'Main Site', href: 'https://example.com' }}
-        />
+        <Footer />
       </div>
     );
   }
@@ -241,11 +230,7 @@ export function ContactPage() {
         </div>
       </main>
 
-      <Footer
-        variant="regular"
-        categories={footerCategories}
-        backToSite={{ name: 'Main Site', href: 'https://example.com' }}
-      />
+      <Footer />
     </div>
   );
 }

@@ -38,7 +38,7 @@ export function TopPage() {
         </div>
       </main>
 
-      <Footer variant="simple" />
+      <Footer />
     </div>
   )
 }

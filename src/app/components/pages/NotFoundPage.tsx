@@ -8,13 +8,6 @@ interface NotFoundPageProps {
 }
 
 export function NotFoundPage({ type = '404', errorMessage }: NotFoundPageProps) {
-  const footerCategories = [
-    { name: '機能説明', href: '/category/features' },
-    { name: '契約・支払方法', href: '/category/billing' },
-    { name: 'アカウント', href: '/category/account' },
-    { name: 'トラブルシューティング', href: '/category/troubleshooting' }
-  ];
-
   const is404 = type === '404';
 
   return (
@@ -164,11 +157,7 @@ export function NotFoundPage({ type = '404', errorMessage }: NotFoundPageProps) 
         </div>
       </main>
 
-      <Footer
-        variant="regular"
-        categories={footerCategories}
-        backToSite={{ name: 'Main Site', href: 'https://example.com' }}
-      />
+      <Footer />
     </div>
   );
 }
