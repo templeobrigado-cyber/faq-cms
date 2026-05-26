@@ -18,8 +18,8 @@ export function Footer({ variant, categories = [], backToSite }: FooterProps) {
               Terms
             </a>
             <span className="opacity-60">|</span>
-            <a href="#" className="hover:opacity-100 hover:underline transition-all">
-              Conditions
+            <a href="/contact" className="hover:opacity-100 hover:underline transition-all">
+              Contact
             </a>
           </div>
           <div className="mt-4 text-center text-xs opacity-80">
