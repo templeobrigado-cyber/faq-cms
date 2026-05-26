@@ -57,11 +57,13 @@ const DEFAULTS: Record<string, string> = {
   security_min_password: '8',
   security_session_timeout: '60',
   security_ip_restriction: 'false',
+  notify_email: '',
+  notify_article_published: 'false',
   notify_new_contact: 'true',
   notify_new_feedback: 'true',
+  notify_zero_hit: 'false',
   notify_weekly: 'false',
   notify_monthly: 'false',
-  notify_email: '',
   ai_proofread_enabled: 'false',
   ai_api_key: '',
 }
@@ -636,30 +638,107 @@ export function SettingsPage() {
 
           {/* 通知設定 */}
           {activeTab === 'notifications' && (
-            <div className="space-y-5">
-              <h2 className="font-medium text-gray-900 mb-4">通知設定</h2>
+            <div className="space-y-6">
+              <div>
+                <h2 className="font-medium text-gray-900 mb-1">通知設定</h2>
+                <p className="text-sm text-gray-500">各イベントが発生したときにメールで通知します。</p>
+              </div>
+
+              {/* 通知先 */}
               <div>
                 <label className={labelClass}>通知先メールアドレス</label>
-                <input type="email" className={inputClass} value={settings.notify_email}
+                <input
+                  type="text"
+                  className={inputClass}
+                  value={settings.notify_email}
                   placeholder="admin@example.com"
-                  onChange={e => set('notify_email', e.target.value)} />
-                <p className={hintClass}>複数の場合はカンマ区切り</p>
+                  onChange={e => set('notify_email', e.target.value)}
+                />
+                <p className={hintClass}>複数の場合はカンマ区切り（例: a@example.com, b@example.com）</p>
               </div>
-              <div className="space-y-3">
-                <p className={labelClass}>メール通知タイミング</p>
-                {[
-                  { key: 'notify_new_contact', label: '新しい問い合わせ' },
-                  { key: 'notify_new_feedback', label: '新しいフィードバック' },
-                  { key: 'notify_weekly', label: '週次レポート' },
-                  { key: 'notify_monthly', label: '月次レポート' },
-                ].map(item => (
-                  <label key={item.key} className="flex items-center gap-2 cursor-pointer">
-                    <input type="checkbox" className={checkboxClass}
-                      checked={settings[item.key] === 'true'}
-                      onChange={() => toggle(item.key)} />
-                    <span className="text-sm text-gray-700">{item.label}</span>
-                  </label>
-                ))}
+
+              {/* 即時通知 */}
+              <div>
+                <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-3">即時通知</p>
+                <div className="border border-gray-200 rounded-lg divide-y divide-gray-100">
+                  {[
+                    {
+                      key: 'notify_article_published',
+                      label: '記事が公開されたとき',
+                      desc: '記事ステータスが「公開」に変更されるたびに通知します',
+                    },
+                    {
+                      key: 'notify_new_contact',
+                      label: '問い合わせが届いたとき',
+                      desc: '問い合わせフォームから新しいメッセージが送信されたときに通知します',
+                    },
+                    {
+                      key: 'notify_new_feedback',
+                      label: 'フィードバックが届いたとき',
+                      desc: '「役に立たなかった」のフィードバックにコメントが付いたときに通知します',
+                    },
+                    {
+                      key: 'notify_zero_hit',
+                      label: 'ヒット0クエリが検出されたとき',
+                      desc: '検索結果が0件のクエリが一定数を超えたときに通知します',
+                    },
+                  ].map(item => (
+                    <div key={item.key} className="flex items-start justify-between gap-4 px-4 py-3.5">
+                      <div>
+                        <p className="text-sm font-medium text-gray-900">{item.label}</p>
+                        <p className="text-xs text-gray-500 mt-0.5">{item.desc}</p>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => toggle(item.key)}
+                        className={`relative shrink-0 inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none ${
+                          settings[item.key] === 'true' ? 'bg-amber-600' : 'bg-gray-300'
+                        }`}
+                      >
+                        <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform shadow ${
+                          settings[item.key] === 'true' ? 'translate-x-6' : 'translate-x-1'
+                        }`} />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* 定期レポート */}
+              <div>
+                <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-3">定期レポート</p>
+                <div className="border border-gray-200 rounded-lg divide-y divide-gray-100">
+                  {[
+                    {
+                      key: 'notify_weekly',
+                      label: '週次レポート',
+                      desc: '毎週月曜日に先週のアクセス・フィードバック・問い合わせ件数を送信します',
+                    },
+                    {
+                      key: 'notify_monthly',
+                      label: '月次レポート',
+                      desc: '毎月1日に先月の集計データとヒット0クエリのまとめを送信します',
+                    },
+                  ].map(item => (
+                    <div key={item.key} className="flex items-start justify-between gap-4 px-4 py-3.5">
+                      <div>
+                        <p className="text-sm font-medium text-gray-900">{item.label}</p>
+                        <p className="text-xs text-gray-500 mt-0.5">{item.desc}</p>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => toggle(item.key)}
+                        className={`relative shrink-0 inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none ${
+                          settings[item.key] === 'true' ? 'bg-amber-600' : 'bg-gray-300'
+                        }`}
+                      >
+                        <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform shadow ${
+                          settings[item.key] === 'true' ? 'translate-x-6' : 'translate-x-1'
+                        }`} />
+                      </button>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           )}
