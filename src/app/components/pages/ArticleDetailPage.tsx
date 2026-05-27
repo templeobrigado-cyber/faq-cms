@@ -110,6 +110,7 @@ export function ArticleDetailPage() {
 
           <div className="mt-16">
             <FeedbackWidget
+              articleTitle={article.title}
               onSubmit={(isHelpful, comment) =>
                 submitFeedback(article.id, isHelpful, comment)
               }
